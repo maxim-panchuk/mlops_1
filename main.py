@@ -1,13 +1,13 @@
-from src.preprocess import Preprocessor
+from src.preprocess import Preprocessor, split_data
 from src.train import ModelTrainer
-from src.utils import ModelEvaluator
+from src.utils import evaluate
 
 data_path = "./data"
 preprocessor = Preprocessor(data_path)
 
 # 1. Load and splitting data
 data = preprocessor.load_data()
-X_train, X_test, y_train, y_test = preprocessor.split_data(data)
+X_train, X_test, y_train, y_test = split_data(data)
 
 # 2. Training
 trainer = ModelTrainer()
@@ -22,8 +22,7 @@ trainer.export_tree(
 )
 
 # 4. Eval
-evaluator = ModelEvaluator()
-evaluator.evaluate(model, X_test, y_test)
+evaluate(model, X_test, y_test)
 
 # 5. Save model
 trainer.save_model('model.joblib')
