@@ -1,15 +1,14 @@
-# src/predict.py
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 
 app = FastAPI()
 
-# Заранее загружаем модель из файла:
+# Load the model in advance from the file:
 model_path = "model.joblib"
-model = joblib.load(model_path)  # подгрузит обученную модель
+model = joblib.load(model_path)  # Load the trained model
 
-# Входная схема данных (4 признака)
+# Input data schema (4 features)
 class InputData(BaseModel):
     variance: float
     skewness: float
@@ -19,18 +18,18 @@ class InputData(BaseModel):
 @app.post("/predict")
 def predict(data: InputData):
     """
-    Получаем на вход 4 параметра, делаем предсказание
-    и возвращаем результат.
+    We receive 4 parameters, make a prediction,
+    and return the result.
     """
-    # Формируем "табличку" с одним наблюдением:
+    # Form a "table" with a single observation:
     new_data = [[
-        data.variance, 
-        data.skewness, 
-        data.curtosis, 
+        data.variance,
+        data.skewness,
+        data.curtosis,
         data.entropy
     ]]
 
-    # Вызываем predict
+    # Call predict
     prediction = model.predict(new_data)
-    # Возвращаем класс как число (или можете отдать строку)
+    # Return the class as a number (or you can return a string)
     return {"prediction": int(prediction[0])}

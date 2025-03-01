@@ -1,4 +1,3 @@
-# src/train.py
 from sklearn.tree import DecisionTreeClassifier, export_graphviz
 import joblib
 
@@ -8,7 +7,7 @@ class ModelTrainer:
 
     def train(self, X_train, y_train):
         """
-        Обучаем DecisionTreeClassifier.
+        Train the DecisionTreeClassifier.
         """
         self.model = DecisionTreeClassifier()
         self.model.fit(X_train, y_train)
@@ -16,7 +15,7 @@ class ModelTrainer:
 
     def export_tree(self, feature_names, class_names_list, output_file='tree.dot'):
         """
-        Сохраняем структуру дерева в файл tree.dot.
+        Save the tree structure to a file (tree.dot).
         """
         export_graphviz(
             self.model,
@@ -27,6 +26,6 @@ class ModelTrainer:
 
     def save_model(self, model_path='model.joblib'):
         """
-        Сохраняем обученную модель на диск.
+        Save the trained model to disk.
         """
         joblib.dump(self.model, model_path)
