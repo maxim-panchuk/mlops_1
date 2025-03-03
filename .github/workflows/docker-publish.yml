@@ -60,5 +60,6 @@ jobs:
 
     - name: Health Check
       run: |
+        sleep 30
         curl -f http://0.0.0.0:8080/health
         
