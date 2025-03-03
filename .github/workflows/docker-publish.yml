@@ -53,33 +53,13 @@ jobs:
       run: |
         docker build -t test-image .
         docker run --rm test-image pytest
-
+        
     - name: Run functional tests
-      run: |
-        # Запускаем контейнер
-        CONTAINER_ID=$(docker run -d -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }})
-        
-        # Ждем запуска сервера
-        echo "Waiting for server to start..."
-        sleep 30
-        
-        # Проверяем health check
-        echo "Checking health endpoint..."
-        curl -f http://localhost:8080/health || {
-          echo "Health check failed. Container logs:"
-          docker logs $CONTAINER_ID
-          exit 1
-        }
-        
-        # Запускаем функциональные тесты
-        echo "Running functional tests..."
-        python tests/test_functional.py || {
-          echo "Functional tests failed. Container logs:"
-          docker logs $CONTAINER_ID
-          exit 1
-        }
-        
-        # Очищаем
-        docker stop $CONTAINER_ID
-        docker rm $CONTAINER_ID
-        
+      echo "Waiting for server to start..."
+      sleep 15
+
+      echo "Checking health endpoint..."
+      curl -f http://localhost:8080/health
+
+      echo "Running functional tests..."
+      python tests/test_functional.py
