@@ -1,16 +1,23 @@
-FROM python:3.10-slim
+# Use Python 3.13 slim image
+FROM python:3.13-slim
 
+# Set working directory
 WORKDIR /app
 
-COPY requirements.txt /app/requirements.txt
+# Copy requirements first to leverage Docker cache
+COPY requirements.txt .
 
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./src /app/src
-COPY ./data /app/data
-COPY ./model.joblib /app/
+# Copy the rest of the application
+COPY . .
 
+# Create necessary directories
+RUN mkdir -p logs
+
+# Expose port
 EXPOSE 8080
 
+# Command to run the application
 CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "8080"]

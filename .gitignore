@@ -5,3 +5,4 @@ model.joblib
 tree.dot
 tests/__pycache__
 .coverage
+.pytest_cache
