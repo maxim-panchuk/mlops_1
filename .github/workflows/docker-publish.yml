@@ -1,7 +1,7 @@
 name: Docker Build and Publish
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [ main, master ]
 
 env:
