@@ -91,4 +91,4 @@ def health_check():
 # The entry point for running on port 8080
 if __name__ == "__main__":
     logger.info("Starting API server")
-    uvicorn.run("server:app", host="0.0.0.0", port=8080, reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=8080)
