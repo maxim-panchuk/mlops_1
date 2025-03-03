@@ -56,7 +56,6 @@ jobs:
 
     - name: Health check
       run: |
-        docker pull ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
         docker run -d -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
         sleep 15
-        curl -f http://localhost:8080/health || exit 1 
+        curl -f http://0.0.0.0:8080/health || exit 1 
