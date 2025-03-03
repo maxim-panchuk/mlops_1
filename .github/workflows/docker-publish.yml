@@ -58,5 +58,5 @@ jobs:
       run: |
         docker pull ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
         docker run -d -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
-        sleep 5
+        sleep 15
         curl -f http://localhost:8080/health || exit 1 
