@@ -53,13 +53,14 @@ jobs:
       run: |
         docker build -t test-image .
         docker run --rm test-image pytest
-        
+
     - name: Run functional tests
-      echo "Waiting for server to start..."
-      sleep 15
+      run: |
+        echo "Waiting for server to start..."
+        sleep 15
 
-      echo "Checking health endpoint..."
-      curl -f http://localhost:8080/health
+        echo "Checking health endpoint..."
+        curl -f http://localhost:8080/health
 
-      echo "Running functional tests..."
-      python tests/test_functional.py
+        echo "Running functional tests..."
+        python tests/test_functional.py
