@@ -3,3 +3,5 @@ logs
 src/__pycache__
 model.joblib
 tree.dot
+tests/__pycache__
+.coverage
