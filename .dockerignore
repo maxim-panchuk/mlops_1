@@ -37,7 +37,6 @@ logs/
 *.swo
 
 # Test
-tests/
 .coverage
 htmlcov/
 .pytest_cache/
