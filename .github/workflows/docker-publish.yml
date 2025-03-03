@@ -6,6 +6,8 @@ on:
 
 env:
   DOCKER_IMAGE: panchesco13/banknote-classifier
+  DOCKERHUB_USERNAME: panchesco13
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
   build-and-push:
@@ -21,8 +23,8 @@ jobs:
     - name: Login to DockerHub
       uses: docker/login-action@v3
       with:
-        username: ${{ vars.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ env.DOCKERHUB_USERNAME }}
+        password: ${{ env.DOCKERHUB_TOKEN }}
 
     - name: Verify Docker login
       run: |
