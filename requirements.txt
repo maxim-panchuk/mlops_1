@@ -1,5 +1,7 @@
 annotated-types==0.7.0
 anyio==4.8.0
+certifi==2025.1.31
+charset-normalizer==3.4.1
 click==8.1.8
 coverage==7.6.12
 fastapi==0.115.11
@@ -17,6 +19,7 @@ pytest==8.3.5
 pytest-cov==6.0.0
 python-dateutil==2.9.0.post0
 pytz==2025.1
+requests==2.32.3
 scikit-learn==1.6.1
 scipy==1.15.2
 six==1.17.0
@@ -25,4 +28,5 @@ starlette==0.46.0
 threadpoolctl==3.5.0
 typing_extensions==4.12.2
 tzdata==2025.1
+urllib3==2.3.0
 uvicorn==0.34.0

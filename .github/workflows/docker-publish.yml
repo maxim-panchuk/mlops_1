@@ -49,17 +49,37 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-    - name: Run tests
+    - name: Run unit tests
       run: |
         docker build -t test-image .
         docker run --rm test-image pytest
 
-    - name: Docker run
+    - name: Run functional tests
       run: |
-        docker run -d -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
-
-    - name: Health Check
-      run: |
+        # Запускаем контейнер
+        CONTAINER_ID=$(docker run -d -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }})
+        
+        # Ждем запуска сервера
+        echo "Waiting for server to start..."
         sleep 30
-        curl -f http://0.0.0.0:8080/health
+        
+        # Проверяем health check
+        echo "Checking health endpoint..."
+        curl -f http://localhost:8080/health || {
+          echo "Health check failed. Container logs:"
+          docker logs $CONTAINER_ID
+          exit 1
+        }
+        
+        # Запускаем функциональные тесты
+        echo "Running functional tests..."
+        python tests/test_functional.py || {
+          echo "Functional tests failed. Container logs:"
+          docker logs $CONTAINER_ID
+          exit 1
+        }
+        
+        # Очищаем
+        docker stop $CONTAINER_ID
+        docker rm $CONTAINER_ID
         
