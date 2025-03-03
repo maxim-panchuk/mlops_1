@@ -54,8 +54,9 @@ jobs:
         docker build -t test-image .
         docker run --rm test-image pytest
 
-    - name: Health check
+    - name: Docker run
       run: |
-        docker run -d -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
-        sleep 30
-        curl -f http://0.0.0.0:8080/health || exit 1  
+        docker run -p 8080:8080 ${{ env.DOCKER_IMAGE }}:sha-${{ github.sha }}
+    - name: Health Check
+      run: |
+        curl -f http://0.0.0.0:8080/health
