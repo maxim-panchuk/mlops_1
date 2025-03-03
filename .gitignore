@@ -1,1 +1,5 @@
 .idea
+logs
+src/__pycache__
+model.joblib
+tree.dot

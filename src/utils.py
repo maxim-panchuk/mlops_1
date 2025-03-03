@@ -1,5 +1,10 @@
 from sklearn.metrics import classification_report
+import configparser
 
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+output_file = config['train']['output_file']
 
 def evaluate(model, X_test, y_test):
     """
